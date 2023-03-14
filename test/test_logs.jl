@@ -26,7 +26,7 @@ end
 function test_direct_log_warn()
     log_warn_path = "warn.log"
     psr_logger = PSRLog.create_psr_logger(log_warn_path)
-    PSRLog.log_warn("test message")
+    PSRLog.warn("test message")
     warn_on_file = readlines(log_warn_path)
     @test occursin("Warn", warn_on_file[1])
     PSRLog.close_psr_logger(psr_logger)
@@ -47,7 +47,7 @@ function test_different_logs_same_file()
     log_path = "test.log"
     psr_logger = PSRLog.create_psr_logger(log_path)
     PSRLog.info("test message")
-    PSRLog.log_warn("test message")
+    PSRLog.warn("test message")
     logs_on_file = readlines(log_path)
     @test occursin("Info", logs_on_file[1])
     @test occursin("Warn", logs_on_file[2])
