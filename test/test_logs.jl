@@ -6,7 +6,7 @@ import PSRLog
 function test_direct_log_debug()
     log_debug_path = "debug.log"
     psr_logger = PSRLog.create_psr_logger(log_debug_path)
-    PSRLog.log_debug("test message")
+    PSRLog.debug("test message")
     debug_on_file = readlines(log_debug_path)
     @test occursin("Debug", debug_on_file[1])
     PSRLog.close_psr_logger(psr_logger)

@@ -16,7 +16,7 @@ end
 # Remove PSRLog from functions names
 
 # Direct logs
-function log_debug(msg::String)
+function debug(msg::String)
     @debug msg
     return nothing
 end
@@ -90,9 +90,9 @@ function treat_message(raw_message::String, replacements...)
     return treated_message
 end
 
-function log_debug(code::Int, replacements...)
+function debug(code::Int, replacements...)
     msg = prepare_msg(code, replacements...)
-    log_debug(msg)
+    debug(msg)
     return nothing
 end
 function log_info(code::Int, replacements...)

@@ -15,7 +15,7 @@ log_file = "my_application.log"
 psr_logger = PSRLog.create_psr_logger(log_file)
 
 # Only goes to file
-PSRLog.log_debug("debug message")
+PSRLog.debug("debug message")
 
 # Goes to file and console
 PSRLog.log_info("info message")
