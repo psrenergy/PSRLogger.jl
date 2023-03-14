@@ -32,7 +32,7 @@ function log_error(msg::String)
     @error msg
     return nothing
 end
-function log_fatal_error(msg::String)
+function fatal_error(msg::String)
     @fatal_error msg
     return nothing
 end
@@ -110,8 +110,8 @@ function log_error(code::Int, replacements...)
     log_error(msg)
     return nothing
 end
-function log_fatal_error(code::Int, replacements...)
+function fatal_error(code::Int, replacements...)
     msg = prepare_msg(code, replacements...)
-    log_fatal_error(msg)
+    fatal_error(msg)
     return nothing
 end
