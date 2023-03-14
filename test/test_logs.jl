@@ -36,7 +36,7 @@ end
 function test_direct_log_error()
     log_error_path = "error.log"
     psr_logger = PSRLog.create_psr_logger(log_error_path)
-    PSRLog._error("test message")
+    PSRLog.non_fatal_error("test message")
     error_on_file = readlines(log_error_path)
     @test occursin("Error", error_on_file[1])
     PSRLog.close_psr_logger(psr_logger)

@@ -20,7 +20,7 @@ PSRLog.debug("debug message")
 # Goes to file and console
 PSRLog.info("info message")
 PSRLog.warn("warn message")
-PSRLog._error("error message")
+PSRLog.non_fatal_error("error message")
 
 # Goes to console and file and then runs exit(1) if the session is not iterative.
 PSRLog.fatal_error("Application cannot continue")
