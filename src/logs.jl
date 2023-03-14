@@ -16,28 +16,28 @@ end
 # Remove PSRLog from functions names
 
 # Direct logs
-function log_debug(msg::String)
+function debug(msg::String)
     @debug msg
     return nothing
 end
-function log_info(msg::String)
+function info(msg::String)
     @info msg
     return nothing
 end
-function log_warn(msg::String)
+function warn(msg::String)
     @warn msg
     return nothing
 end
-function log_error(msg::String)
+function non_fatal_error(msg::String)
     @error msg
     return nothing
 end
-function log_fatal_error(msg::String)
+function fatal_error(msg::String)
     @fatal_error msg
     return nothing
 end
 
-function log_msg(level::Int, msg::String)
+function msg(level::Int, msg::String)
     @logmsg level msg
     return nothing
 end
@@ -66,8 +66,8 @@ function get_raw_message(dict::Dict, code::Int, lang::String)
 end
 
 function prepare_msg(code::Int, replacements...)
-    dict = get_PSRLog_dict()
-    lang = get_PSRLog_language()
+    dict = get_dict()
+    lang = get_language()
     raw_message = get_raw_message(dict, code, lang)
     treated_message = treat_message(raw_message, replacements...)
     return treated_message
@@ -90,28 +90,28 @@ function treat_message(raw_message::String, replacements...)
     return treated_message
 end
 
-function log_debug(code::Int, replacements...)
+function debug(code::Int, replacements...)
     msg = prepare_msg(code, replacements...)
-    log_debug(msg)
+    debug(msg)
     return nothing
 end
-function log_info(code::Int, replacements...)
+function info(code::Int, replacements...)
     msg = prepare_msg(code, replacements...)
-    log_info(msg)
+    info(msg)
     return nothing
 end
-function log_warn(code::Int, replacements...)
+function warn(code::Int, replacements...)
     msg = prepare_msg(code, replacements...)
-    log_warn(msg)
+    warn(msg)
     return nothing
 end
-function log_error(code::Int, replacements...)
+function non_fatal_error(code::Int, replacements...)
     msg = prepare_msg(code, replacements...)
-    log_error(msg)
+    non_fatal_error(msg)
     return nothing
 end
-function log_fatal_error(code::Int, replacements...)
+function fatal_error(code::Int, replacements...)
     msg = prepare_msg(code, replacements...)
-    log_fatal_error(msg)
+    fatal_error(msg)
     return nothing
 end
