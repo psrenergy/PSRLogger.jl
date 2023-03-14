@@ -37,7 +37,7 @@ function fatal_error(msg::String)
     return nothing
 end
 
-function log_msg(level::Int, msg::String)
+function msg(level::Int, msg::String)
     @logmsg level msg
     return nothing
 end
