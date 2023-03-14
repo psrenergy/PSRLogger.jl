@@ -1,9 +1,9 @@
-function set_PSRLog_language(lang::String)
+function set_language(lang::String)
     PSRLOG_LANG[1] = lang
     return lang
 end
 
-function get_PSRLog_language()
+function get_language()
     return PSRLOG_LANG[1]
 end
 
@@ -41,7 +41,7 @@ function is_valid_dict(dict::Dict)::Bool
     return true
 end
 
-function set_PSRLog_dict(dict::Dict)
+function set_dict(dict::Dict)
     if !is_valid_dict(dict)
         error("The dictionary of codes and language is invalid.")
     end
@@ -49,6 +49,6 @@ function set_PSRLog_dict(dict::Dict)
     return dict
 end
 
-function get_PSRLog_dict()
+function get_dict()
     return PSRLOG_LOG_DICT[1]
 end

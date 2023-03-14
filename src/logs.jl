@@ -66,8 +66,8 @@ function get_raw_message(dict::Dict, code::Int, lang::String)
 end
 
 function prepare_msg(code::Int, replacements...)
-    dict = get_PSRLog_dict()
-    lang = get_PSRLog_language()
+    dict = get_dict()
+    lang = get_language()
     raw_message = get_raw_message(dict, code, lang)
     treated_message = treat_message(raw_message, replacements...)
     return treated_message

@@ -42,8 +42,8 @@ langs_dict = Dict(
         "pt" => "O arquivo @@@ não existe.",
     )
 )
-PSRLog.set_PSRLog_dict(langs_dict)
-PSRLog.set_PSRLog_language("pt")
+PSRLog.set_dict(langs_dict)
+PSRLog.set_language("pt")
 psr_logger = PSRLog.create_psr_logger(log_path)
 # It will log the portuguese version "Olá!"
 PSRLog.log_info(1)
