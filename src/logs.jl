@@ -28,7 +28,7 @@ function warn(msg::String)
     @warn msg
     return nothing
 end
-function log_error(msg::String)
+function _error(msg::String)
     @error msg
     return nothing
 end
@@ -105,9 +105,9 @@ function warn(code::Int, replacements...)
     warn(msg)
     return nothing
 end
-function log_error(code::Int, replacements...)
+function _error(code::Int, replacements...)
     msg = prepare_msg(code, replacements...)
-    log_error(msg)
+    _error(msg)
     return nothing
 end
 function fatal_error(code::Int, replacements...)
