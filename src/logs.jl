@@ -20,7 +20,7 @@ function debug(msg::String)
     @debug msg
     return nothing
 end
-function log_info(msg::String)
+function info(msg::String)
     @info msg
     return nothing
 end
@@ -95,9 +95,9 @@ function debug(code::Int, replacements...)
     debug(msg)
     return nothing
 end
-function log_info(code::Int, replacements...)
+function info(code::Int, replacements...)
     msg = prepare_msg(code, replacements...)
-    log_info(msg)
+    info(msg)
     return nothing
 end
 function log_warn(code::Int, replacements...)

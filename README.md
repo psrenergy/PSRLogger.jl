@@ -18,7 +18,7 @@ psr_logger = PSRLog.create_psr_logger(log_file)
 PSRLog.debug("debug message")
 
 # Goes to file and console
-PSRLog.log_info("info message")
+PSRLog.info("info message")
 PSRLog.log_warn("warn message")
 PSRLog.log_error("error message")
 
@@ -46,9 +46,9 @@ PSRLog.set_dict(langs_dict)
 PSRLog.set_language("pt")
 psr_logger = PSRLog.create_psr_logger(log_path)
 # It will log the portuguese version "Olá!"
-PSRLog.log_info(1)
+PSRLog.info(1)
 # It will display the message "O arquivo file.txt não existe"
-PSRLog.log_info(2, "file.txt")
+PSRLog.info(2, "file.txt")
 ```
 
 One suggestion to store the codes ans messages for multiple languages is to store it on a TOML file.
