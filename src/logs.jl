@@ -8,16 +8,10 @@ macro fatal_error(msg)
     end
 end
 
-# Debug with level
-# interpolate with a number
-# Remove fatal error
-# find a way to set level of file and console via function
-# Remove log_...
-# Remove PSRLog from functions names
-
 # Direct logs
-function debug(msg::String)
-    @debug msg
+function debug(msg::String; level::Int = -1000)
+    @assert Logging.Debug <= Logging.LogLevel(level) < Logging.Info
+    @logmsg Logging.LogLevel(level) msg
     return nothing
 end
 function info(msg::String)
@@ -34,11 +28,6 @@ function non_fatal_error(msg::String)
 end
 function fatal_error(msg::String)
     @fatal_error msg
-    return nothing
-end
-
-function msg(level::Int, msg::String)
-    @logmsg level msg
     return nothing
 end
 
@@ -90,9 +79,9 @@ function treat_message(raw_message::String, replacements...)
     return treated_message
 end
 
-function debug(code::Int, replacements...)
+function debug(code::Int, replacements...; level::Int = -1000)
     msg = prepare_msg(code, replacements...)
-    debug(msg)
+    debug(msg; level)
     return nothing
 end
 function info(code::Int, replacements...)

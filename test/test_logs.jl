@@ -97,6 +97,29 @@ function test_log_from_langs_dict_inexistent_code()
     rm(log_path; force = true)
 end
 
+function test_log_from_langs_dict_debug_levels()
+    log_path = "langs_debug_levels1.log"
+    langs_dict = Dict(
+        1 => Dict(
+            "en" => "hi!",
+            "pt" => "oi!",
+        ),
+        2 => Dict(
+            "en" => "bye!",
+            "pt" => "tchau!",
+        )
+    )
+    PSRLog.set_dict(langs_dict)
+    PSRLog.set_language("pt")
+    psr_logger = PSRLog.create_psr_logger(log_path)
+    PSRLog.debug(1; level = -1)
+    logs_on_file = readlines(log_path)
+    @test length(logs_on_file) == 1
+    @test occursin("oi!", logs_on_file[1]) 
+    PSRLog.close_psr_logger(psr_logger)
+    rm(log_path; force = true)
+end
+
 function test_log_from_langs_dict_with_interpolation()
     log_path = "langs.log"
     langs_dict = Dict(
