@@ -1,4 +1,4 @@
-module PSRLog
+module PSRLogger
 
 using LoggingExtras
 using Dates
