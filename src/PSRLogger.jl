@@ -10,4 +10,4 @@ include("constants.jl")
 include("psr_logger.jl")
 include("logs.jl")
 
-end # module PSRLog
+end # module PSRLogger
