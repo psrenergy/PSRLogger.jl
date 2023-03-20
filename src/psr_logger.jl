@@ -22,7 +22,7 @@ function remove_log_file_path_on_logger_creation(log_file_path::String)
         rm(log_file_path; force = true)
     catch err
         if isa(err, Base.IOError)
-            error("Cannot create a logger if $log_file_path still has IOStreams open.")
+            println("[WARN] $log_file_path still has IOStreams open.")
         end
     end
     return nothing

@@ -28,7 +28,7 @@ function test_create_two_psr_loggers_in_the_same_file()
     log_path = "test_log.log"
     psr_logger = PSRLogger.create_psr_logger(log_path)
     @test isfile(log_path)
-    @test_throws ErrorException PSRLogger.create_psr_logger(log_path)
+    PSRLogger.create_psr_logger(log_path)
     PSRLogger.close_psr_logger(psr_logger)
     rm(log_path)
 end
