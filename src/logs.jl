@@ -13,7 +13,7 @@ end
 # Remove fatal error
 # find a way to set level of file and console via function
 # Remove log_...
-# Remove PSRLog from functions names
+# Remove PSRLogger from functions names
 
 # Direct logs
 function debug(msg::String)
