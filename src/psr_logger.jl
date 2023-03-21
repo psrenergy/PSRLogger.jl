@@ -29,7 +29,7 @@ function remove_log_file_path_on_logger_creation(log_file_path::String)
 end
 
 function choose_level_to_print(level::LogLevel)
-    if level >= Logging.Info
+    if level >= Logging.Info || level == Logging.Debug
         return string(level)
     end
     return string("Debug Level ", level.level)
@@ -64,6 +64,38 @@ function create_psr_logger(
     format_logger_file = FormatLogger(log_file_path; append=true) do io, args
         level_to_print = choose_level_to_print(args.level)
         println(io, now(), " ", "[", level_to_print, "] ", args.message)
+    end
+    file_logger = MinLevelLogger(format_logger_file, min_level_file);
+    logger = TeeLogger(
+        console_logger,
+        file_logger
+    )
+    global_logger(logger)
+    return logger
+end
+
+function create_psr_logger(
+        log_file_path::String,
+        level_dict::Dict; 
+        min_level_console::Logging.LogLevel = Logging.Info, 
+        min_level_file::Logging.LogLevel = Logging.Debug, 
+        
+    )
+    remove_log_file_path_on_logger_creation(log_file_path)
+
+    # Console logger only min_level_console and up
+    format_logger_console = FormatLogger() do io, args
+        level_to_print = choose_level_to_print(args.level)
+        @assert level_to_print in keys(level_dict)
+        println(io, "[", level_dict[level_to_print], "] ", args.message)
+    end
+    console_logger = MinLevelLogger(format_logger_console, min_level_console);
+
+    # File logger logs min_level_file and up
+    format_logger_file = FormatLogger(log_file_path; append=true) do io, args
+        level_to_print = choose_level_to_print(args.level)
+        @assert level_to_print in keys(level_dict)
+        println(io, now(), " ", "[", level_dict[level_to_print], "] ", args.message)
     end
     file_logger = MinLevelLogger(format_logger_file, min_level_file);
     logger = TeeLogger(
