@@ -69,22 +69,25 @@ end
 
 function test_log_names_with_dict()
     level_dict = Dict(
+            "Debug Level" => "debug level",
             "Debug" => "debug",
             "Info" => "info",
             "Warn" => "warn",
             "Error" => "error"
-    )
+        )
     log_path = "log_names_test.log"
-    psr_logger = PSRLogger.create_psr_logger(log_path, level_dict)
+    psr_logger = PSRLogger.create_psr_logger(log_path; level_dict = level_dict)
     PSRLogger.debug("test")
+    PSRLogger.debug("test"; level = -100)
     PSRLogger.info("test")
     PSRLogger.warn("test")
     PSRLogger.non_fatal_error("test")
     logs_on_file = readlines(log_path)
     @test occursin("[debug]", logs_on_file[1])
-    @test occursin("[info]", logs_on_file[2])
-    @test occursin("[warn]", logs_on_file[3])
-    @test occursin("[error]", logs_on_file[4])
+    @test occursin("[debug level -100]", logs_on_file[2])
+    @test occursin("[info]", logs_on_file[3])
+    @test occursin("[warn]", logs_on_file[4])
+    @test occursin("[error]", logs_on_file[5])
     PSRLogger.close_psr_logger(psr_logger)
     rm(log_path)
 end
