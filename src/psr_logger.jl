@@ -45,7 +45,14 @@ end
 * `log_file_path`: Log file path
 * `min_level_console`: Minimum level shown in console
 * `min_level_file`: Minimum level shown in file
-* `level_dict`: Dictionary to select logging name to print. The key arguments must be "Debug Level", "Debug", "Info", "Warn" and "Error". The values are the desired logging name.
+* `level_dict`: Dictionary to select logging name to print. Default: 
+    Dict(
+        "Debug Level" => "Debug Level",
+        "Debug" => "Debug",
+        "Info" => "Info",
+        "Warn" => "Warn",
+        "Error" => "Error"
+    )
 """
 function create_psr_logger(
         log_file_path::String; 
