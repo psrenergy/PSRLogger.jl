@@ -32,7 +32,7 @@ function choose_level_to_print(level::LogLevel, level_dict::Dict)
     if level >= Logging.Info || level == Logging.Debug
         return level_dict[string(level)]
     end
-    return string(level_dict["Debug Level"]*" ", level.level)
+    return string(level_dict["Debug Level"], " ", level.level)
 end
 
 """
