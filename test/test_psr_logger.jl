@@ -26,14 +26,12 @@ end
 
 function test_create_two_psr_loggers_in_the_same_file()
     log_path = "test_log.log"
-    psr_logger = PSRLogger.create_psr_logger(log_path)
+    psr_logger1 = PSRLogger.create_psr_logger(log_path)
     @test isfile(log_path)
-    # On linux it removes the file
-    # On windows gives an error
-    if Sys.iswindows()
-        @test_throws ErrorException PSRLogger.create_psr_logger(log_path)
-    end
-    PSRLogger.close_psr_logger(psr_logger)
+    psr_logger2 = PSRLogger.create_psr_logger(log_path)
+    @test isfile(log_path)
+    PSRLogger.close_psr_logger(psr_logger1)
+    PSRLogger.close_psr_logger(psr_logger2)
     rm(log_path)
 end
 

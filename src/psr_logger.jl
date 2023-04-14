@@ -19,7 +19,10 @@ remove_log_file_path_on_logger_creation(log_file_path::String)
 """
 function remove_log_file_path_on_logger_creation(log_file_path::String)
     try 
-        rm(log_file_path; force = true)
+        if global_logger() isa TeeLogger
+            close_psr_logger(global_logger())
+            rm(log_file_path; force = true)
+        end
     catch err
         if isa(err, Base.IOError)
             error("Cannot create a logger if $log_file_path still has IOStreams open.")
