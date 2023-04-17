@@ -69,11 +69,11 @@ function create_psr_logger(
             "Error" => "Error"
         ),
         color_dict::Dict{String, Symbol} = Dict(
-            "Debug Level" => :normal,
-            "Debug" => :normal,
-            "Info" => :normal,
-            "Warn" => :normal,
-            "Error" => :normal
+            "Debug Level" => :cyan,
+            "Debug" => :cyan,
+            "Info" => :cyan,
+            "Warn" => :yellow,
+            "Error" => :red
         ),
         background_reverse_dict::Dict{String, Bool} = Dict(
             "Debug Level" => false,
