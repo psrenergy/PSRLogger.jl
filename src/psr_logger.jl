@@ -67,6 +67,20 @@ function create_psr_logger(
             "Info" => "Info",
             "Warn" => "Warn",
             "Error" => "Error"
+        ),
+        color_dict::Dict{String, Symbol} = Dict(
+            "Debug Level" => :normal,
+            "Debug" => :normal,
+            "Info" => :normal,
+            "Warn" => :normal,
+            "Error" => :normal
+        ),
+        background_reverse_dict::Dict{String, Bool} = Dict(
+            "Debug Level" => false,
+            "Debug" => false,
+            "Info" => false,
+            "Warn" => false,
+            "Error" => false,
         )
     )
     remove_log_file_path_on_logger_creation(log_file_path)
@@ -74,7 +88,9 @@ function create_psr_logger(
     # Console logger only min_level_console and up
     format_logger_console = FormatLogger() do io, args
         level_to_print = choose_level_to_print(args.level, level_dict)
-        println(io, "[", level_to_print, "] ", args.message)
+        print(io, "[") 
+        print_colored(io, level_to_print, args.level, color_dict, background_reverse_dict)
+        println(io, "] ", args.message)
     end
     console_logger = MinLevelLogger(format_logger_console, min_level_console);
 
@@ -90,4 +106,28 @@ function create_psr_logger(
     )
     global_logger(logger)
     return logger
+end
+
+function print_colored(
+    io::IO, 
+    str::String, 
+    level::Logging.LogLevel,
+    color_dict::Dict{String, Symbol},
+    reverse_dict::Dict{String, Bool}
+    )
+    
+    if level >= Logging.Info || level == Logging.Debug
+        level_str = string(level)
+    else 
+        level_str = string("Debug Level")
+    end
+    color = color_dict[level_str]
+    reverse = reverse_dict[level_str]
+
+    print_colored(io, str; color = color, reverse = reverse)
+end
+
+function print_colored(io::IO, str::String; color::Symbol = :normal, reverse::Bool = false)
+    # str = string(args...)
+    printstyled(io, str; color = color, reverse = reverse)
 end
