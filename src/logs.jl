@@ -41,7 +41,7 @@ function get_raw_message(dict::Dict, code::Int, lang::String)
         else
             error("Message of code $code does not have the language $lang.")
         end
-    # Code could also be a string that parses to Int
+        # Code could also be a string that parses to Int
     elseif haskey(dict, "$code")
         langs_dict = dict[code]
         if haskey(langs_dict, lang)

@@ -10,7 +10,7 @@ function test_direct_log_debug()
     debug_on_file = readlines(log_debug_path)
     @test occursin("Debug", debug_on_file[1])
     PSRLogger.close_psr_logger(psr_logger)
-    rm(log_debug_path; force = true)
+    return rm(log_debug_path; force = true)
 end
 
 function test_direct_log_info()
@@ -20,7 +20,7 @@ function test_direct_log_info()
     info_on_file = readlines(log_info_path)
     @test occursin("Info", info_on_file[1])
     PSRLogger.close_psr_logger(psr_logger)
-    rm(log_info_path; force = true)
+    return rm(log_info_path; force = true)
 end
 
 function test_direct_log_warn()
@@ -30,7 +30,7 @@ function test_direct_log_warn()
     warn_on_file = readlines(log_warn_path)
     @test occursin("Warn", warn_on_file[1])
     PSRLogger.close_psr_logger(psr_logger)
-    rm(log_warn_path; force = true)
+    return rm(log_warn_path; force = true)
 end
 
 function test_direct_log_error()
@@ -40,7 +40,7 @@ function test_direct_log_error()
     error_on_file = readlines(log_error_path)
     @test occursin("Error", error_on_file[1])
     PSRLogger.close_psr_logger(psr_logger)
-    rm(log_error_path; force = true)
+    return rm(log_error_path; force = true)
 end
 
 function test_different_logs_same_file()
@@ -52,7 +52,7 @@ function test_different_logs_same_file()
     @test occursin("Info", logs_on_file[1])
     @test occursin("Warn", logs_on_file[2])
     PSRLogger.close_psr_logger(psr_logger)
-    rm(log_path; force = true)
+    return rm(log_path; force = true)
 end
 
 function test_log_from_langs_dict()
@@ -65,7 +65,7 @@ function test_log_from_langs_dict()
         2 => Dict(
             "en" => "bye!",
             "pt" => "tchau!",
-        )
+        ),
     )
     PSRLogger.set_dict(langs_dict)
     PSRLogger.set_language("pt")
@@ -74,7 +74,7 @@ function test_log_from_langs_dict()
     logs_on_file = readlines(log_path)
     @test occursin("oi", logs_on_file[1])
     PSRLogger.close_psr_logger(psr_logger)
-    rm(log_path; force = true)
+    return rm(log_path; force = true)
 end
 
 function test_log_from_langs_dict_inexistent_code()
@@ -87,14 +87,14 @@ function test_log_from_langs_dict_inexistent_code()
         2 => Dict(
             "en" => "bye!",
             "pt" => "tchau!",
-        )
+        ),
     )
     PSRLogger.set_dict(langs_dict)
     PSRLogger.set_language("pt")
     psr_logger = PSRLogger.create_psr_logger(log_path)
     @test_throws ErrorException PSRLogger.info(3)
     PSRLogger.close_psr_logger(psr_logger)
-    rm(log_path; force = true)
+    return rm(log_path; force = true)
 end
 
 function test_log_from_langs_dict_debug_levels()
@@ -107,7 +107,7 @@ function test_log_from_langs_dict_debug_levels()
         2 => Dict(
             "en" => "bye!",
             "pt" => "tchau!",
-        )
+        ),
     )
     PSRLogger.set_dict(langs_dict)
     PSRLogger.set_language("pt")
@@ -115,9 +115,9 @@ function test_log_from_langs_dict_debug_levels()
     PSRLogger.debug(1; level = -1)
     logs_on_file = readlines(log_path)
     @test length(logs_on_file) == 1
-    @test occursin("oi!", logs_on_file[1]) 
+    @test occursin("oi!", logs_on_file[1])
     PSRLogger.close_psr_logger(psr_logger)
-    rm(log_path; force = true)
+    return rm(log_path; force = true)
 end
 
 function test_log_from_langs_dict_with_interpolation()
@@ -130,7 +130,7 @@ function test_log_from_langs_dict_with_interpolation()
         2 => Dict(
             "en" => "The thermal plant @@@ of code @@@ has the an invalid capacity.",
             "pt" => "A usina térmica @@@ de código @@@ tem a capacidade inválida.",
-        )
+        ),
     )
     PSRLogger.set_dict(langs_dict)
     PSRLogger.set_language("pt")
@@ -142,7 +142,7 @@ function test_log_from_langs_dict_with_interpolation()
     @test occursin("UTE1", logs_on_file[2])
     @test occursin("2", logs_on_file[2])
     PSRLogger.close_psr_logger(psr_logger)
-    rm(log_path; force = true)
+    return rm(log_path; force = true)
 end
 
 function test_log_from_langs_dict_with_invalid_interpolation()
@@ -155,7 +155,7 @@ function test_log_from_langs_dict_with_invalid_interpolation()
         2 => Dict(
             "en" => "The thermal plant @@@ of code @@@ has the an invalid capacity.",
             "pt" => "A usina térmica @@@ de código @@@ tem a capacidade inválida.",
-        )
+        ),
     )
     PSRLogger.set_dict(langs_dict)
     PSRLogger.set_language("pt")
@@ -163,7 +163,7 @@ function test_log_from_langs_dict_with_invalid_interpolation()
     @test_throws ErrorException PSRLogger.info(1, "10", "oi", "tchau")
     @test_throws ErrorException PSRLogger.info(2, "UTE1")
     PSRLogger.close_psr_logger(psr_logger)
-    rm(log_path; force = true)
+    return rm(log_path; force = true)
 end
 
 function runtests()
