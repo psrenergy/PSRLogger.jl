@@ -137,6 +137,5 @@ function print_colored(
 end
 
 function print_colored(io::IO, str::String; color::Symbol = :normal, reverse::Bool = false)
-    # str = string(args...)
     printstyled(io, str; color = color, reverse = reverse)
 end
