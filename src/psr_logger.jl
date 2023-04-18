@@ -32,12 +32,21 @@ function remove_log_file_path_on_logger_creation(log_file_path::String)
 end
 
 function choose_level_to_print(level::LogLevel, level_dict::Dict)
+    level_str = get_level_string(level)
+    if level_str == "Debug Level"
+        return string(level_dict[level_str], " ", level.level)
+    else
+        return string(level_dict[level_str])
+    end
+end
+
+function get_level_string(level::LogLevel)
     if Logging.Info <= level <= Logging.Error || level == Logging.Debug
-        return level_dict[string(level)]
+        return string(level)
     elseif Logging.Debug < level < Logging.Info
-        return string(level_dict["Debug Level"], " ", level.level)
+        return "Debug Level"
     elseif level == FatalErrorLevel
-        return string(level_dict["Fatal Error"])
+        return "Fatal Error"
     end
 end
 
@@ -122,13 +131,7 @@ function print_colored(
     reverse_dict::Dict{String, Bool}
     )
     
-    if Logging.Info <= level <= Logging.Error || level == Logging.Debug
-        level_str = string(level)
-    elseif Logging.Debug < level < Logging.Info
-        level_str = "Debug Level"
-    elseif level == FatalErrorLevel
-        level_str = "Fatal Error"
-    end
+    level_str = get_level_string(level)
 
     color = color_dict[level_str]
     reverse = reverse_dict[level_str]
