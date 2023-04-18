@@ -19,5 +19,5 @@ jobs:
           using Pkg
           Pkg.add(PackageSpec(name="Aqua"))
           Pkg.develop(PackageSpec(path=pwd()))
-          using PSRClassesInterface, Aqua
-          Aqua.test_all(PSRClassesInterface; unbound_args = false)
+          using PSRLogger, Aqua
+          Aqua.test_all(PSRLogger; unbound_args = false)
