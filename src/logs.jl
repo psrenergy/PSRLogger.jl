@@ -1,7 +1,7 @@
 # Additional level
 macro fatal_error(msg)
     quote
-        @error $(esc(msg))
+        @logmsg FatalErrorLevel $(esc(msg))
         if !isinteractive()
             exit(1)
         end

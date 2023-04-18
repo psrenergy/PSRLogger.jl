@@ -1,3 +1,5 @@
+const FatalErrorLevel = Logging.LogLevel(3000)
+
 function set_language(lang::String)
     PSRLOG_LANG[1] = lang
     return lang
