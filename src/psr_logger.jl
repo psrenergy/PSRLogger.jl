@@ -105,14 +105,14 @@ function create_psr_logger(
         level_to_print = choose_level_to_print(args.level, level_dict)
         print(io, "[")
         print_colored(io, level_to_print, args.level, color_dict, background_reverse_dict)
-        return println(io, "] ", args.message)
+        println(io, "] ", args.message)
     end
     console_logger = MinLevelLogger(format_logger_console, min_level_console)
 
     # File logger logs min_level_file and up
     format_logger_file = FormatLogger(log_file_path; append = true) do io, args
         level_to_print = choose_level_to_print(args.level, level_dict)
-        return println(io, now(), " ", "[", level_to_print, "] ", args.message)
+        println(io, now(), " ", "[", level_to_print, "] ", args.message)
     end
     file_logger = MinLevelLogger(format_logger_file, min_level_file)
     logger = TeeLogger(
@@ -135,9 +135,11 @@ function print_colored(
     color = color_dict[level_str]
     reverse = reverse_dict[level_str]
 
-    return print_colored(io, str; color = color, reverse = reverse)
+    print_colored(io, str; color = color, reverse = reverse)
+    return nothing
 end
 
 function print_colored(io::IO, str::String; color::Symbol = :normal, reverse::Bool = false)
-    return printstyled(io, str; color = color, reverse = reverse)
+    printstyled(io, str; color = color, reverse = reverse)
+    return nothing
 end

@@ -21,7 +21,8 @@ function test_debug_levels_debug_with_level_999()
     @test occursin("debug -999", logs_on_file[2])
     @test occursin("debug -1", logs_on_file[3])
     PSRLogger.close_psr_logger(psr_logger)
-    return rm(log_path)
+    rm(log_path)
+    return nothing
 end
 
 function test_debug_levels_2()
@@ -39,7 +40,8 @@ function test_debug_levels_2()
     @test length(logs_on_file) == 1
     @test occursin("debug -1", logs_on_file[1])
     PSRLogger.close_psr_logger(psr_logger)
-    return rm(log_path)
+    rm(log_path)
+    return nothing
 end
 
 function test_debug_levels_assertion_error_1()
@@ -52,7 +54,8 @@ function test_debug_levels_assertion_error_1()
     )
     @test_throws AssertionError PSRLogger.debug("debug"; level = 1)
     PSRLogger.close_psr_logger(psr_logger)
-    return rm(log_path)
+    rm(log_path)
+    return nothing
 end
 
 function test_debug_levels_assertion_error_2()
@@ -65,7 +68,8 @@ function test_debug_levels_assertion_error_2()
     )
     @test_throws AssertionError PSRLogger.debug("debug"; level = -1001)
     PSRLogger.close_psr_logger(psr_logger)
-    return rm(log_path)
+    rm(log_path)
+    return nothing
 end
 
 function test_log_levels_on_file()
@@ -84,7 +88,8 @@ function test_log_levels_on_file()
     @test occursin("warn", logs_on_file[1])
     @test occursin("non_fatal_error", logs_on_file[2])
     PSRLogger.close_psr_logger(psr_logger)
-    return rm(log_path)
+    rm(log_path)
+    return nothing
 end
 
 function test_log_names_with_dict()
@@ -109,7 +114,8 @@ function test_log_names_with_dict()
     @test occursin("[warn]", logs_on_file[4])
     @test occursin("[error]", logs_on_file[5])
     PSRLogger.close_psr_logger(psr_logger)
-    return rm(log_path)
+    rm(log_path)
+    return nothing
 end
 
 function runtests()

@@ -21,4 +21,4 @@ join_lines_based_on_source = true
 indent_submodule = false
 separate_kwargs_with_semicolon = true
 surround_whereop_typeparameters = true
-always_use_return = true
+always_use_return = false

@@ -10,7 +10,8 @@ function test_direct_log_debug()
     debug_on_file = readlines(log_debug_path)
     @test occursin("Debug", debug_on_file[1])
     PSRLogger.close_psr_logger(psr_logger)
-    return rm(log_debug_path; force = true)
+    rm(log_debug_path; force = true)
+    return nothing
 end
 
 function test_direct_log_info()
@@ -20,7 +21,8 @@ function test_direct_log_info()
     info_on_file = readlines(log_info_path)
     @test occursin("Info", info_on_file[1])
     PSRLogger.close_psr_logger(psr_logger)
-    return rm(log_info_path; force = true)
+    rm(log_info_path; force = true)
+    return nothing
 end
 
 function test_direct_log_warn()
@@ -30,7 +32,8 @@ function test_direct_log_warn()
     warn_on_file = readlines(log_warn_path)
     @test occursin("Warn", warn_on_file[1])
     PSRLogger.close_psr_logger(psr_logger)
-    return rm(log_warn_path; force = true)
+    rm(log_warn_path; force = true)
+    return nothing
 end
 
 function test_direct_log_error()
@@ -40,7 +43,8 @@ function test_direct_log_error()
     error_on_file = readlines(log_error_path)
     @test occursin("Error", error_on_file[1])
     PSRLogger.close_psr_logger(psr_logger)
-    return rm(log_error_path; force = true)
+    rm(log_error_path; force = true)
+    return nothing
 end
 
 function test_different_logs_same_file()
@@ -52,7 +56,8 @@ function test_different_logs_same_file()
     @test occursin("Info", logs_on_file[1])
     @test occursin("Warn", logs_on_file[2])
     PSRLogger.close_psr_logger(psr_logger)
-    return rm(log_path; force = true)
+    rm(log_path; force = true)
+    return nothing
 end
 
 function test_log_from_langs_dict()
@@ -74,7 +79,8 @@ function test_log_from_langs_dict()
     logs_on_file = readlines(log_path)
     @test occursin("oi", logs_on_file[1])
     PSRLogger.close_psr_logger(psr_logger)
-    return rm(log_path; force = true)
+    rm(log_path; force = true)
+    return nothing
 end
 
 function test_log_from_langs_dict_inexistent_code()
@@ -94,7 +100,8 @@ function test_log_from_langs_dict_inexistent_code()
     psr_logger = PSRLogger.create_psr_logger(log_path)
     @test_throws ErrorException PSRLogger.info(3)
     PSRLogger.close_psr_logger(psr_logger)
-    return rm(log_path; force = true)
+    rm(log_path; force = true)
+    return nothing
 end
 
 function test_log_from_langs_dict_debug_levels()
@@ -117,7 +124,8 @@ function test_log_from_langs_dict_debug_levels()
     @test length(logs_on_file) == 1
     @test occursin("oi!", logs_on_file[1])
     PSRLogger.close_psr_logger(psr_logger)
-    return rm(log_path; force = true)
+    rm(log_path; force = true)
+    return nothing
 end
 
 function test_log_from_langs_dict_with_interpolation()
@@ -142,7 +150,8 @@ function test_log_from_langs_dict_with_interpolation()
     @test occursin("UTE1", logs_on_file[2])
     @test occursin("2", logs_on_file[2])
     PSRLogger.close_psr_logger(psr_logger)
-    return rm(log_path; force = true)
+    rm(log_path; force = true)
+    return nothing
 end
 
 function test_log_from_langs_dict_with_invalid_interpolation()
@@ -163,7 +172,8 @@ function test_log_from_langs_dict_with_invalid_interpolation()
     @test_throws ErrorException PSRLogger.info(1, "10", "oi", "tchau")
     @test_throws ErrorException PSRLogger.info(2, "UTE1")
     PSRLogger.close_psr_logger(psr_logger)
-    return rm(log_path; force = true)
+    rm(log_path; force = true)
+    return nothing
 end
 
 function runtests()
