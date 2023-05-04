@@ -126,7 +126,7 @@ function create_psr_logger(
 
     if brackets
         open_bracket = "["
-        close_bracket = "] "
+        close_bracket = "]"
     else
         open_bracket = ""
         close_bracket = ""
@@ -137,14 +137,14 @@ function create_psr_logger(
         level_to_print = choose_level_to_print(args.level, level_dict)
         print(io, open_bracket) 
         print_colored(io, level_to_print, args.level, color_dict, background_reverse_dict)
-        println(io, close_bracket, args.message)
+        println(io, close_bracket, " ", args.message)
     end
     console_logger = MinLevelLogger(format_logger_console, min_level_console);
 
     # File logger logs min_level_file and up
     format_logger_file = FormatLogger(log_file_path; append=true) do io, args
         level_to_print = choose_level_to_print(args.level, level_dict)
-        println(io, now(), " ", open_bracket, level_to_print, close_bracket, args.message)
+        println(io, now(), " ", open_bracket, level_to_print, close_bracket, " ", args.message)
     end
     file_logger = MinLevelLogger(format_logger_file, min_level_file);
     logger = TeeLogger(
