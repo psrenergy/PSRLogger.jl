@@ -103,3 +103,34 @@ background_reverse_dict = Dict(
     "Fatal Error" => true
 )
 ```
+
+The next example shows how to print the tags in lowercase letters, with julia default string colors and background.
+```julia
+level_dict = Dict(
+    "Debug Level" => "debug level",
+    "Debug" => "debug",
+    "Info" => "info",
+    "Warn" => "warn",
+    "Error" => "error",
+    "Fatal Error" => "fatal error"
+)
+color_dict = Dict(
+    "Debug Level" => :default,
+    "Debug" => :default,
+    "Info" => :default,
+    "Warn" => :default,
+    "Error" => :default,
+    "Fatal Error" => :default
+)
+background_reverse_dict = Dict(
+    "Debug Level" => false,
+    "Debug" => false,
+    "Info" => false,
+    "Warn" => false,
+    "Error" => false,
+    "Fatal Error" => false
+)
+
+log_file = "my_application.log"
+PSRLogger.create_psr_logger(log_file; level_dict, color_dict, background_reverse_dict)
+```
