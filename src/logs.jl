@@ -76,6 +76,7 @@ function treat_message(raw_message::String, replacements...)
     for i in 1:num_correct_replacements
         treated_message *= string(splitted_message[i], replacements[i])
     end
+    treated_message *= splitted_message[end]
     return treated_message
 end
 
