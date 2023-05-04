@@ -73,6 +73,7 @@ function create_psr_logger(
         log_file_path::String; 
         min_level_console::Logging.LogLevel = Logging.Info, 
         min_level_file::Logging.LogLevel = Logging.Debug,
+        brackets::Bool = true,
         level_dict::Dict = Dict(
             "Debug Level" => "Debug Level",
             "Debug" => "Debug",
@@ -100,19 +101,27 @@ function create_psr_logger(
     )
     remove_log_file_path_on_logger_creation(log_file_path)
 
+    if brackets
+        open_bracket = "["
+        close_bracket = "] "
+    else
+        open_bracket = ""
+        close_bracket = ""
+    end
+
     # Console logger only min_level_console and up
     format_logger_console = FormatLogger() do io, args
         level_to_print = choose_level_to_print(args.level, level_dict)
-        print(io, "[") 
+        print(io, open_bracket) 
         print_colored(io, level_to_print, args.level, color_dict, background_reverse_dict)
-        println(io, "] ", args.message)
+        println(io, close_bracket, args.message)
     end
     console_logger = MinLevelLogger(format_logger_console, min_level_console);
 
     # File logger logs min_level_file and up
     format_logger_file = FormatLogger(log_file_path; append=true) do io, args
         level_to_print = choose_level_to_print(args.level, level_dict)
-        println(io, now(), " ", "[", level_to_print, "] ", args.message)
+        println(io, now(), " ", open_bracket, level_to_print, close_bracket, args.message)
     end
     file_logger = MinLevelLogger(format_logger_file, min_level_file);
     logger = TeeLogger(
