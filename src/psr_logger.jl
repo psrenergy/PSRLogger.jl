@@ -53,20 +53,43 @@ end
 """
     create_psr_logger(
         log_file_path::String; 
-        min_level_console::Logging.LogLevel = Logging.Info, 
-        min_level_file::Logging.LogLevel = Logging.Debug
+        min_level_console::Logging.LogLevel, 
+        min_level_file::Logging.LogLevel,
+        brackets,
+        level_dict,
+        color_dict,
+        background_reverse_dict
     )
 
 * `log_file_path`: Log file path
-* `min_level_console`: Minimum level shown in console
-* `min_level_file`: Minimum level shown in file
-* `level_dict`: Dictionary to select logging name to print. Default: 
+* `min_level_console`: Minimum level shown in console. Default: Logging.Info
+* `min_level_file`: Minimum level shown in file. Default: Logging.Debug
+* `brackets`: Boolean value to select tag with brackets (true) or without (false). Default: true
+* `level_dict`: Dictionary to select logging tag to print. Default: 
     Dict(
         "Debug Level" => "Debug Level",
         "Debug" => "Debug",
         "Info" => "Info",
         "Warn" => "Warn",
         "Error" => "Error"
+    )
+* `color_dict`: Dictionary to select logging tag color to print. Default: 
+    Dict(
+        "Debug Level" => :cyan,
+        "Debug" => :cyan,
+        "Info" => :cyan,
+        "Warn" => :yellow,
+        "Error" => :red,
+        "Fatal Error" => :red
+    )
+* `background_reverse_dict`: Dictionary to select logging tag background to print. Default: 
+    Dict(
+        "Debug Level" => false,
+        "Debug" => false,
+        "Info" => false,
+        "Warn" => false,
+        "Error" => false,
+        "Fatal Error" => true
     )
 """
 function create_psr_logger(
