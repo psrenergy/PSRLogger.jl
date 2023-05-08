@@ -40,6 +40,14 @@ function choose_level_to_print(level::LogLevel, level_dict::Dict)
     end
 end
 
+function choose_terminal_io(level::LogLevel)
+    if level >= Logging.Error
+        return stderr
+    else
+        return stdout
+    end
+end
+
 function get_level_string(level::LogLevel)
     if Logging.Info <= level <= Logging.Error || level == Logging.Debug
         return string(level)
@@ -135,6 +143,7 @@ function create_psr_logger(
     # Console logger only min_level_console and up
     format_logger_console = FormatLogger() do io, args
         level_to_print = choose_level_to_print(args.level, level_dict)
+        io = choose_terminal_io(args.level)
         print(io, open_bracket) 
         print_colored(io, level_to_print, args.level, color_dict, background_reverse_dict)
         println(io, close_bracket, " ", args.message)
@@ -169,8 +178,14 @@ function print_colored(
     reverse = reverse_dict[level_str]
 
     print_colored(io, str; color = color, reverse = reverse)
+    return nothing
 end
 
 function print_colored(io::IO, str::String; color::Symbol = :normal, reverse::Bool = false)
-    printstyled(io, str; color = color, reverse = reverse)
+    if color == :normal && reverse == false
+        print(io, str)
+    else
+        printstyled(io, str; color = color, reverse = reverse)
+    end
+    return nothing
 end
