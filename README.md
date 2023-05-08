@@ -115,12 +115,12 @@ level_dict = Dict(
     "Fatal Error" => "fatal error"
 )
 color_dict = Dict(
-    "Debug Level" => :default,
-    "Debug" => :default,
-    "Info" => :default,
-    "Warn" => :default,
-    "Error" => :default,
-    "Fatal Error" => :default
+    "Debug Level" => :normal,
+    "Debug" => :normal,
+    "Info" => :normal,
+    "Warn" => :normal,
+    "Error" => :normal,
+    "Fatal Error" => :normal
 )
 background_reverse_dict = Dict(
     "Debug Level" => false,
