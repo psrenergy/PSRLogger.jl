@@ -18,7 +18,7 @@ remove_log_file_path_on_logger_creation(log_file_path::String)
 * `log_file_path`: Remove log file in path log_file_path
 """
 function remove_log_file_path_on_logger_creation(log_file_path::String)
-    try 
+    try
         if global_logger() isa TeeLogger
             close_psr_logger(global_logger())
             rm(log_file_path; force = true)
@@ -93,40 +93,40 @@ end
     )
 """
 function create_psr_logger(
-        log_file_path::String; 
-        min_level_console::Logging.LogLevel = Logging.Info, 
-        min_level_file::Logging.LogLevel = Logging.Debug,
-        brackets::Bool = true,
-        level_dict::Dict = Dict(
-            "Debug Level" => "Debug Level",
-            "Debug" => "Debug",
-            "Info" => "Info",
-            "Warn" => "Warn",
-            "Error" => "Error",
-            "Fatal Error" => "Fatal Error"
-        ),
-        color_dict::Dict{String, Symbol} = Dict(
-            "Debug Level" => :cyan,
-            "Debug" => :cyan,
-            "Info" => :cyan,
-            "Warn" => :yellow,
-            "Error" => :red,
-            "Fatal Error" => :red
-        ),
-        background_reverse_dict::Dict{String, Bool} = Dict(
-            "Debug Level" => false,
-            "Debug" => false,
-            "Info" => false,
-            "Warn" => false,
-            "Error" => false,
-            "Fatal Error" => true
-        )
-    )
+    log_file_path::String;
+    min_level_console::Logging.LogLevel = Logging.Info,
+    min_level_file::Logging.LogLevel = Logging.Debug,
+    brackets::Bool = true,
+    level_dict::Dict = Dict(
+        "Debug Level" => "Debug Level",
+        "Debug" => "Debug",
+        "Info" => "Info",
+        "Warn" => "Warn",
+        "Error" => "Error",
+        "Fatal Error" => "Fatal Error",
+    ),
+    color_dict::Dict{String, Symbol} = Dict(
+        "Debug Level" => :cyan,
+        "Debug" => :cyan,
+        "Info" => :cyan,
+        "Warn" => :yellow,
+        "Error" => :red,
+        "Fatal Error" => :red,
+    ),
+    background_reverse_dict::Dict{String, Bool} = Dict(
+        "Debug Level" => false,
+        "Debug" => false,
+        "Info" => false,
+        "Warn" => false,
+        "Error" => false,
+        "Fatal Error" => true,
+    ),
+)
     remove_log_file_path_on_logger_creation(log_file_path)
 
     if brackets
         open_bracket = "["
-        close_bracket = "] "
+        close_bracket = "]"
     else
         open_bracket = ""
         close_bracket = ""
@@ -135,42 +135,52 @@ function create_psr_logger(
     # Console logger only min_level_console and up
     format_logger_console = FormatLogger() do io, args
         level_to_print = choose_level_to_print(args.level, level_dict)
-        print(io, open_bracket) 
+        print(io, open_bracket)
         print_colored(io, level_to_print, args.level, color_dict, background_reverse_dict)
-        println(io, close_bracket, args.message)
+        println(io, close_bracket, " ", args.message)
     end
-    console_logger = MinLevelLogger(format_logger_console, min_level_console);
+    console_logger = MinLevelLogger(format_logger_console, min_level_console)
 
     # File logger logs min_level_file and up
-    format_logger_file = FormatLogger(log_file_path; append=true) do io, args
+    format_logger_file = FormatLogger(log_file_path; append = true) do io, args
         level_to_print = choose_level_to_print(args.level, level_dict)
-        println(io, now(), " ", open_bracket, level_to_print, close_bracket, args.message)
+        println(
+            io,
+            now(),
+            " ",
+            open_bracket,
+            level_to_print,
+            close_bracket,
+            " ",
+            args.message,
+        )
     end
-    file_logger = MinLevelLogger(format_logger_file, min_level_file);
+    file_logger = MinLevelLogger(format_logger_file, min_level_file)
     logger = TeeLogger(
         console_logger,
-        file_logger
+        file_logger,
     )
     global_logger(logger)
     return logger
 end
 
 function print_colored(
-    io::IO, 
-    str::String, 
+    io::IO,
+    str::String,
     level::Logging.LogLevel,
     color_dict::Dict{String, Symbol},
-    reverse_dict::Dict{String, Bool}
-    )
-    
+    reverse_dict::Dict{String, Bool},
+)
     level_str = get_level_string(level)
 
     color = color_dict[level_str]
     reverse = reverse_dict[level_str]
 
     print_colored(io, str; color = color, reverse = reverse)
+    return nothing
 end
 
 function print_colored(io::IO, str::String; color::Symbol = :normal, reverse::Bool = false)
     printstyled(io, str; color = color, reverse = reverse)
+    return nothing
 end
