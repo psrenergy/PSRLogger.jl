@@ -33,16 +33,14 @@ end
 
 # logs via code and language
 function get_raw_message(dict::Dict, code::Int, lang::String)
-    # Code could be an Int
-    if haskey(dict, code)
+    if haskey(dict, code) # Code could be an Int
         langs_dict = dict[code]
         if haskey(langs_dict, lang)
             return langs_dict[lang]
         else
             error("Message of code $code does not have the language $lang.")
         end
-        # Code could also be a string that parses to Int
-    elseif haskey(dict, "$code")
+    elseif haskey(dict, "$code") # Code could also be a string that parses to Int
         langs_dict = dict[code]
         if haskey(langs_dict, lang)
             return langs_dict[lang]
