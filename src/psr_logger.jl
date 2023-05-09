@@ -53,14 +53,19 @@ end
 """
     create_psr_logger(
         log_file_path::String; 
-        min_level_console::Logging.LogLevel = Logging.Info, 
-        min_level_file::Logging.LogLevel = Logging.Debug
+        min_level_console::Logging.LogLevel, 
+        min_level_file::Logging.LogLevel,
+        brackets,
+        level_dict,
+        color_dict,
+        background_reverse_dict
     )
 
 * `log_file_path`: Log file path
-* `min_level_console`: Minimum level shown in console
-* `min_level_file`: Minimum level shown in file
-* `level_dict`: Dictionary to select logging name to print. Default: 
+* `min_level_console`: Minimum level shown in console. Default: Logging.Info
+* `min_level_file`: Minimum level shown in file. Default: Logging.Debug
+* `brackets`: Boolean value to select tag with brackets (true) or without (false). Default: true
+* `level_dict`: Dictionary to select logging tag to print. Default: 
     Dict(
         "Debug Level" => "Debug Level",
         "Debug" => "Debug",
@@ -68,18 +73,37 @@ end
         "Warn" => "Warn",
         "Error" => "Error"
     )
+* `color_dict`: Dictionary to select logging tag color to print. Default: 
+    Dict(
+        "Debug Level" => :cyan,
+        "Debug" => :cyan,
+        "Info" => :cyan,
+        "Warn" => :yellow,
+        "Error" => :red,
+        "Fatal Error" => :red
+    )
+* `background_reverse_dict`: Dictionary to select logging tag background to print. Default: 
+    Dict(
+        "Debug Level" => false,
+        "Debug" => false,
+        "Info" => false,
+        "Warn" => false,
+        "Error" => false,
+        "Fatal Error" => true
+    )
 """
 function create_psr_logger(
-    log_file_path::String;
-    min_level_console::Logging.LogLevel = Logging.Info,
+    log_file_path::String; 
+    min_level_console::Logging.LogLevel = Logging.Info, 
     min_level_file::Logging.LogLevel = Logging.Debug,
+    brackets::Bool = true,
     level_dict::Dict = Dict(
         "Debug Level" => "Debug Level",
         "Debug" => "Debug",
         "Info" => "Info",
         "Warn" => "Warn",
         "Error" => "Error",
-        "Fatal Error" => "Fatal Error",
+        "Fatal Error" => "Fatal Error"
     ),
     color_dict::Dict{String, Symbol} = Dict(
         "Debug Level" => :cyan,
@@ -87,7 +111,7 @@ function create_psr_logger(
         "Info" => :cyan,
         "Warn" => :yellow,
         "Error" => :red,
-        "Fatal Error" => :red,
+        "Fatal Error" => :red
     ),
     background_reverse_dict::Dict{String, Bool} = Dict(
         "Debug Level" => false,
@@ -95,24 +119,33 @@ function create_psr_logger(
         "Info" => false,
         "Warn" => false,
         "Error" => false,
-        "Fatal Error" => true,
-    ),
+        "Fatal Error" => true
+    )
 )
+
     remove_log_file_path_on_logger_creation(log_file_path)
+
+    if brackets
+        open_bracket = "["
+        close_bracket = "]"
+    else
+        open_bracket = ""
+        close_bracket = ""
+    end
 
     # Console logger only min_level_console and up
     format_logger_console = FormatLogger() do io, args
         level_to_print = choose_level_to_print(args.level, level_dict)
-        print(io, "[")
+        print(io, open_bracket)
         print_colored(io, level_to_print, args.level, color_dict, background_reverse_dict)
-        println(io, "] ", args.message)
+        println(io, close_bracket, " ", args.message)
     end
     console_logger = MinLevelLogger(format_logger_console, min_level_console)
 
     # File logger logs min_level_file and up
     format_logger_file = FormatLogger(log_file_path; append = true) do io, args
         level_to_print = choose_level_to_print(args.level, level_dict)
-        println(io, now(), " ", "[", level_to_print, "] ", args.message)
+        println(io, now(), " ", open_bracket, level_to_print, close_bracket, " ", args.message)
     end
     file_logger = MinLevelLogger(format_logger_file, min_level_file)
     logger = TeeLogger(
