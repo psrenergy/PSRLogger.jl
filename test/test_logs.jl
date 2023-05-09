@@ -11,6 +11,7 @@ function test_direct_log_debug()
     @test occursin("Debug", debug_on_file[1])
     PSRLogger.close_psr_logger(psr_logger)
     rm(log_debug_path; force = true)
+    return nothing
 end
 
 function test_direct_log_info()
@@ -21,6 +22,7 @@ function test_direct_log_info()
     @test occursin("Info", info_on_file[1])
     PSRLogger.close_psr_logger(psr_logger)
     rm(log_info_path; force = true)
+    return nothing
 end
 
 function test_direct_log_warn()
@@ -31,6 +33,7 @@ function test_direct_log_warn()
     @test occursin("Warn", warn_on_file[1])
     PSRLogger.close_psr_logger(psr_logger)
     rm(log_warn_path; force = true)
+    return nothing
 end
 
 function test_direct_log_error()
@@ -41,6 +44,7 @@ function test_direct_log_error()
     @test occursin("Error", error_on_file[1])
     PSRLogger.close_psr_logger(psr_logger)
     rm(log_error_path; force = true)
+    return nothing
 end
 
 function test_different_logs_same_file()
@@ -53,6 +57,7 @@ function test_different_logs_same_file()
     @test occursin("Warn", logs_on_file[2])
     PSRLogger.close_psr_logger(psr_logger)
     rm(log_path; force = true)
+    return nothing
 end
 
 function test_log_from_langs_dict()
@@ -65,7 +70,7 @@ function test_log_from_langs_dict()
         2 => Dict(
             "en" => "bye!",
             "pt" => "tchau!",
-        )
+        ),
     )
     PSRLogger.set_dict(langs_dict)
     PSRLogger.set_language("pt")
@@ -75,6 +80,7 @@ function test_log_from_langs_dict()
     @test occursin("oi", logs_on_file[1])
     PSRLogger.close_psr_logger(psr_logger)
     rm(log_path; force = true)
+    return nothing
 end
 
 function test_log_from_langs_dict_inexistent_code()
@@ -87,7 +93,7 @@ function test_log_from_langs_dict_inexistent_code()
         2 => Dict(
             "en" => "bye!",
             "pt" => "tchau!",
-        )
+        ),
     )
     PSRLogger.set_dict(langs_dict)
     PSRLogger.set_language("pt")
@@ -95,6 +101,7 @@ function test_log_from_langs_dict_inexistent_code()
     @test_throws ErrorException PSRLogger.info(3)
     PSRLogger.close_psr_logger(psr_logger)
     rm(log_path; force = true)
+    return nothing
 end
 
 function test_log_from_langs_dict_debug_levels()
@@ -107,7 +114,7 @@ function test_log_from_langs_dict_debug_levels()
         2 => Dict(
             "en" => "bye!",
             "pt" => "tchau!",
-        )
+        ),
     )
     PSRLogger.set_dict(langs_dict)
     PSRLogger.set_language("pt")
@@ -115,9 +122,10 @@ function test_log_from_langs_dict_debug_levels()
     PSRLogger.debug(1; level = -1)
     logs_on_file = readlines(log_path)
     @test length(logs_on_file) == 1
-    @test occursin("oi!", logs_on_file[1]) 
+    @test occursin("oi!", logs_on_file[1])
     PSRLogger.close_psr_logger(psr_logger)
     rm(log_path; force = true)
+    return nothing
 end
 
 function test_log_from_langs_dict_with_interpolation()
@@ -130,7 +138,7 @@ function test_log_from_langs_dict_with_interpolation()
         2 => Dict(
             "en" => "The thermal plant @@@ of code @@@ has the an invalid capacity.",
             "pt" => "A usina térmica @@@ de código @@@ tem a capacidade inválida.",
-        )
+        ),
     )
     PSRLogger.set_dict(langs_dict)
     PSRLogger.set_language("pt")
@@ -143,6 +151,7 @@ function test_log_from_langs_dict_with_interpolation()
     @test occursin("2", logs_on_file[2])
     PSRLogger.close_psr_logger(psr_logger)
     rm(log_path; force = true)
+    return nothing
 end
 
 function test_log_from_langs_dict_with_invalid_interpolation()
@@ -155,7 +164,7 @@ function test_log_from_langs_dict_with_invalid_interpolation()
         2 => Dict(
             "en" => "The thermal plant @@@ of code @@@ has the an invalid capacity.",
             "pt" => "A usina térmica @@@ de código @@@ tem a capacidade inválida.",
-        )
+        ),
     )
     PSRLogger.set_dict(langs_dict)
     PSRLogger.set_language("pt")
@@ -164,6 +173,7 @@ function test_log_from_langs_dict_with_invalid_interpolation()
     @test_throws ErrorException PSRLogger.info(2, "UTE1")
     PSRLogger.close_psr_logger(psr_logger)
     rm(log_path; force = true)
+    return nothing
 end
 
 function runtests()

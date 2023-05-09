@@ -22,7 +22,9 @@ function is_valid_dict(dict::Dict)::Bool
             if isa(code, String) && !isnothing(tryparse(Int, code))
                 continue
             end
-            println("Dictionary of codes and languages has a code that is not an Int representation.")
+            println(
+                "Dictionary of codes and languages has a code that is not an Int representation.",
+            )
             return false
         end
         for v in values(dict)
@@ -31,10 +33,14 @@ function is_valid_dict(dict::Dict)::Bool
             end
             for ks in keys(v)
                 if !isa(ks, String)
-                    println("Dictionary of codes and languages has a language that is not a String.")
+                    println(
+                        "Dictionary of codes and languages has a language that is not a String.",
+                    )
                     return false
                 elseif isempty(ks)
-                    println("Dictionary of codes and languages has a language that is an empty String.")
+                    println(
+                        "Dictionary of codes and languages has a language that is an empty String.",
+                    )
                     return false
                 end
             end
