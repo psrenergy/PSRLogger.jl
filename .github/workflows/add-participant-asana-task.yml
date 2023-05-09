@@ -1,6 +1,6 @@
 name: add-participant-asana-task
 on:
-  issue_comment:
+  issue_commented:
     types: [created]
 
 concurrency:
