@@ -67,9 +67,9 @@ end
 function toml_file_to_dict(toml_dict_path::String)
     @assert isfile(toml_dict_path)
     toml_dict = TOML.parsefile(toml_dict_path)
-    new_dict = Dict{Int64, Dict{String, String}}()
+    new_dict = Dict{Int, Dict{String, String}}()
     for (k, v) in toml_dict
-        new_key = parse(Int64, k)
+        new_key = parse(Int, k)
         new_dict[new_key] = Dict{String, String}()
         for (ksub, vsub) in toml_dict[k]
             new_dict[new_key][string(ksub)] = string(vsub)
