@@ -58,7 +58,7 @@ end
 function treat_empty_tag(level_to_print::String, close_bracket::String)
     if level_to_print == "" && close_bracket == ""
         return ""
-    else 
+    else
         return " "
     end
 end
@@ -77,7 +77,15 @@ end
 * `log_file_path`: Log file path
 * `min_level_console`: Minimum level shown in console. Default: Logging.Info
 * `min_level_file`: Minimum level shown in file. Default: Logging.Debug
-* `brackets`: Boolean value to select tag with brackets (true) or without (false). Default: true
+* `brackets_dict`: select the brackets for each LogLevel. As default,
+    Dict(
+        "Debug Level" => ["[", "]"],
+        "Debug" => ["[", "]"],
+        "Info" => ["[", "]"],
+        "Warn" => ["[", "]"],
+        "Error" => ["[", "]"],
+        "Fatal Error" => ["[", "]"],
+    )
 * `level_dict`: Dictionary to select logging tag to print. Default: 
     Dict(
         "Debug Level" => "Debug Level",
