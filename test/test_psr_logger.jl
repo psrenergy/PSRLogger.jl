@@ -38,6 +38,25 @@ function test_create_two_psr_loggers_in_the_same_file()
     return nothing
 end
 
+function test_append_log_in_the_same_file()
+    log_path = "test_log.log"
+
+    psr_logger1 = PSRLogger.create_psr_logger(log_path)
+    PSRLogger.info("old log")
+    PSRLogger.close_psr_logger(psr_logger1)
+
+    psr_logger2 = PSRLogger.create_psr_logger(log_path; append_log = true)
+    PSRLogger.info("new log")
+    PSRLogger.close_psr_logger(psr_logger2)
+
+    logs_on_file = readlines(log_path)
+    @test occursin("old log", logs_on_file[1])
+    @test occursin("new log", logs_on_file[2])
+
+    rm(log_path)
+    return nothing
+end
+
 function runtests()
     for name in names(@__MODULE__; all = true)
         if startswith("$name", "test_")

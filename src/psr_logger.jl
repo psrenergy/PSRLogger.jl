@@ -97,6 +97,7 @@ function create_psr_logger(
     min_level_console::Logging.LogLevel = Logging.Info,
     min_level_file::Logging.LogLevel = Logging.Debug,
     brackets::Bool = true,
+    append_log::Bool = false,
     level_dict::Dict = Dict(
         "Debug Level" => "Debug Level",
         "Debug" => "Debug",
@@ -122,7 +123,9 @@ function create_psr_logger(
         "Fatal Error" => true,
     ),
 )
-    remove_log_file_path_on_logger_creation(log_file_path)
+    if !append_log
+        remove_log_file_path_on_logger_creation(log_file_path)
+    end
 
     if brackets
         open_bracket = "["
