@@ -82,6 +82,7 @@ PSRLogger.info(2, "file.txt")
 There are some kargs that can be passed using `PSRLogger.create_psr_logger`:
 
 * `brackets_dict`: select the brackets for each LogLevel. As default,
+```
 brackets_dict = Dict(
     "Debug Level" => ["[", "]"],
     "Debug" => ["[", "]"],
@@ -90,6 +91,7 @@ brackets_dict = Dict(
     "Error" => ["[", "]"],
     "Fatal Error" => ["[", "]"],
 )
+```
 
 * `level_dict`: defined in order to change the tags. As default, 
 ```

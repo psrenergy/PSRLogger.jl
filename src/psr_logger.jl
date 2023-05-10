@@ -77,6 +77,7 @@ end
 * `log_file_path`: Log file path
 * `min_level_console`: Minimum level shown in console. Default: Logging.Info
 * `min_level_file`: Minimum level shown in file. Default: Logging.Debug
+* `append_log`: Boolean input to append logs in existing log file (if true) or overwrite/create log file (if false). Default is false
 * `brackets_dict`: select the brackets for each LogLevel. As default,
     Dict(
         "Debug Level" => ["[", "]"],
@@ -117,6 +118,7 @@ function create_psr_logger(
     log_file_path::String;
     min_level_console::Logging.LogLevel = Logging.Info,
     min_level_file::Logging.LogLevel = Logging.Debug,
+    append_log::Bool = false,
     brackets_dict::Dict = Dict(
         "Debug Level" => ["[", "]"],
         "Debug" => ["[", "]"],
@@ -125,7 +127,6 @@ function create_psr_logger(
         "Error" => ["[", "]"],
         "Fatal Error" => ["[", "]"],
     ),
-    append_log::Bool = false,
     level_dict::Dict = Dict(
         "Debug Level" => "Debug Level",
         "Debug" => "Debug",
