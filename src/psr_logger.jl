@@ -50,6 +50,19 @@ function get_level_string(level::LogLevel)
     end
 end
 
+function get_tag_brackets(level::LogLevel, brackets_dict::Dict)
+    level_str = get_level_string(level)
+    return brackets_dict[level_str]
+end
+
+function treat_empty_tag(level_to_print::String, close_bracket::String)
+    if level_to_print == "" && close_bracket == ""
+        return ""
+    else 
+        return " "
+    end
+end
+
 """
     create_psr_logger(
         log_file_path::String; 
@@ -96,7 +109,14 @@ function create_psr_logger(
     log_file_path::String;
     min_level_console::Logging.LogLevel = Logging.Info,
     min_level_file::Logging.LogLevel = Logging.Debug,
-    brackets::Bool = true,
+    brackets_dict::Dict = Dict(
+        "Debug Level" => ["[", "]"],
+        "Debug" => ["[", "]"],
+        "Info" => ["[", "]"],
+        "Warn" => ["[", "]"],
+        "Error" => ["[", "]"],
+        "Fatal Error" => ["[", "]"],
+    ),
     level_dict::Dict = Dict(
         "Debug Level" => "Debug Level",
         "Debug" => "Debug",
@@ -124,26 +144,22 @@ function create_psr_logger(
 )
     remove_log_file_path_on_logger_creation(log_file_path)
 
-    if brackets
-        open_bracket = "["
-        close_bracket = "]"
-    else
-        open_bracket = ""
-        close_bracket = ""
-    end
-
     # Console logger only min_level_console and up
     format_logger_console = FormatLogger() do io, args
         level_to_print = choose_level_to_print(args.level, level_dict)
+        open_bracket, close_bracket = get_tag_brackets(args.level, brackets_dict)
+        space_before_msg = treat_empty_tag(level_to_print, close_bracket)
         print(io, open_bracket)
         print_colored(io, level_to_print, args.level, color_dict, background_reverse_dict)
-        println(io, close_bracket, " ", args.message)
+        println(io, close_bracket, space_before_msg, args.message)
     end
     console_logger = MinLevelLogger(format_logger_console, min_level_console)
 
     # File logger logs min_level_file and up
     format_logger_file = FormatLogger(log_file_path; append = true) do io, args
         level_to_print = choose_level_to_print(args.level, level_dict)
+        open_bracket, close_bracket = get_tag_brackets(args.level, brackets_dict)
+        space_before_msg = treat_empty_tag(level_to_print, close_bracket)
         println(
             io,
             now(),
@@ -151,7 +167,7 @@ function create_psr_logger(
             open_bracket,
             level_to_print,
             close_bracket,
-            " ",
+            space_before_msg,
             args.message,
         )
     end
