@@ -40,11 +40,11 @@ end
 
 function test_append_log_in_the_same_file()
     log_path = "test_log.log"
-    
+
     psr_logger1 = PSRLogger.create_psr_logger(log_path)
     PSRLogger.info("old log")
     PSRLogger.close_psr_logger(psr_logger1)
-    
+
     psr_logger2 = PSRLogger.create_psr_logger(log_path; append_log = true)
     PSRLogger.info("new log")
     PSRLogger.close_psr_logger(psr_logger2)
