@@ -51,7 +51,9 @@ PSRLogger.info(1)
 PSRLogger.info(2, "file.txt")
 ```
 
-One suggestion to store the codes ans messages for multiple languages is to store it on a TOML file.
+One suggestion to store the codes ans messages for multiple languages is to store it on a TOML file. The function `PSRLogger.set_dict` accepts the TOML path as input. 
+
+Dictionary TOML:
 ```toml
 [1]
 "en" = "Hello!"
@@ -60,6 +62,19 @@ One suggestion to store the codes ans messages for multiple languages is to stor
 [2]
 "en" = "The file @@@ does not exist."
 "pt" = "O arquivo @@@ não existe."
+```
+
+Set dictionary from TOML:
+```julia
+log_path = "langs.log"
+toml_dict_path = "example.toml"
+PSRLogger.set_dict(toml_dict_path)
+PSRLogger.set_language("pt")
+psr_logger = PSRLogger.create_psr_logger(log_path)
+# It will log the portuguese version "Olá!"
+PSRLogger.info(1)
+# It will display the message "O arquivo file.txt não existe"
+PSRLogger.info(2, "file.txt")
 ```
 
 ## Customize log tag

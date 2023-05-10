@@ -2,6 +2,7 @@ module PSRLogger
 
 using LoggingExtras
 using Dates
+using TOML
 
 const PSRLOG_LANG = String["en"]
 const PSRLOG_LOG_DICT = [Dict()]
