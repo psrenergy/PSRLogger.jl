@@ -144,7 +144,7 @@ function create_psr_logger(
     format_logger_console = FormatLogger() do io, args
         level_to_print = choose_level_to_print(args.level, level_dict)
         io = choose_terminal_io(args.level)
-        print(io, open_bracket) 
+        print(io, open_bracket)
         print_colored(io, level_to_print, args.level, color_dict, background_reverse_dict)
         println(io, close_bracket, " ", args.message)
     end
