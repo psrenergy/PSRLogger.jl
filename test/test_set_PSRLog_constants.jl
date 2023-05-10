@@ -17,7 +17,7 @@ function test_set_and_get_valid_dict()
         2 => Dict(
             "en" => "bye!",
             "pt" => "tchau!",
-        )
+        ),
     )
     PSRLogger.set_dict(valid_dict)
     @test PSRLogger.get_dict() == valid_dict
@@ -32,7 +32,7 @@ function test_set_and_get_valid_dict_with_code_strings()
         "2" => Dict(
             "en" => "bye!",
             "pt" => "tchau!",
-        )
+        ),
     )
     PSRLogger.set_dict(valid_dict)
     @test PSRLogger.get_dict() == valid_dict
@@ -67,7 +67,6 @@ function test_set_invalid_empty_language_dict()
     )
     @test_throws ErrorException PSRLogger.set_dict(invalid_dict)
 end
-
 
 function test_set_empty_language_dict()
     invalid_dict = Dict()

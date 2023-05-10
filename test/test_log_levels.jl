@@ -7,7 +7,11 @@ import PSRLogger
 function test_debug_levels_debug_with_level_999()
     log_path = "log_debug_levels_test.log"
     level = -1000
-    psr_logger = PSRLogger.create_psr_logger(log_path; min_level_console = Logging.LogLevel(level), min_level_file = Logging.LogLevel(level))
+    psr_logger = PSRLogger.create_psr_logger(
+        log_path;
+        min_level_console = Logging.LogLevel(level),
+        min_level_file = Logging.LogLevel(level),
+    )
     PSRLogger.debug("debug")
     PSRLogger.debug("debug -999"; level = -999)
     PSRLogger.debug("debug -1"; level = -1)
@@ -18,12 +22,17 @@ function test_debug_levels_debug_with_level_999()
     @test occursin("debug -1", logs_on_file[3])
     PSRLogger.close_psr_logger(psr_logger)
     rm(log_path)
+    return nothing
 end
 
 function test_debug_levels_2()
     log_path = "log_debug_levels_test.log"
     level = -100
-    psr_logger = PSRLogger.create_psr_logger(log_path; min_level_console = Logging.LogLevel(level), min_level_file = Logging.LogLevel(level))
+    psr_logger = PSRLogger.create_psr_logger(
+        log_path;
+        min_level_console = Logging.LogLevel(level),
+        min_level_file = Logging.LogLevel(level),
+    )
     PSRLogger.debug("debug")
     PSRLogger.debug("debug -999"; level = -999)
     PSRLogger.debug("debug -1"; level = -1)
@@ -32,29 +41,44 @@ function test_debug_levels_2()
     @test occursin("debug -1", logs_on_file[1])
     PSRLogger.close_psr_logger(psr_logger)
     rm(log_path)
+    return nothing
 end
 
 function test_debug_levels_assertion_error_1()
     log_path = "test_debug_levels_assertion_error.log"
     level = -100
-    psr_logger = PSRLogger.create_psr_logger(log_path; min_level_console = Logging.LogLevel(level), min_level_file = Logging.LogLevel(level))
+    psr_logger = PSRLogger.create_psr_logger(
+        log_path;
+        min_level_console = Logging.LogLevel(level),
+        min_level_file = Logging.LogLevel(level),
+    )
     @test_throws AssertionError PSRLogger.debug("debug"; level = 1)
     PSRLogger.close_psr_logger(psr_logger)
     rm(log_path)
+    return nothing
 end
 
 function test_debug_levels_assertion_error_2()
     log_path = "test_debug_levels_assertion_error.log"
     level = -10000
-    psr_logger = PSRLogger.create_psr_logger(log_path; min_level_console = Logging.LogLevel(level), min_level_file = Logging.LogLevel(level))
+    psr_logger = PSRLogger.create_psr_logger(
+        log_path;
+        min_level_console = Logging.LogLevel(level),
+        min_level_file = Logging.LogLevel(level),
+    )
     @test_throws AssertionError PSRLogger.debug("debug"; level = -1001)
     PSRLogger.close_psr_logger(psr_logger)
     rm(log_path)
+    return nothing
 end
 
 function test_log_levels_on_file()
     log_path = "log_file_levels_test.log"
-    psr_logger = PSRLogger.create_psr_logger(log_path; min_level_console = Logging.Info, min_level_file = Logging.Warn)
+    psr_logger = PSRLogger.create_psr_logger(
+        log_path;
+        min_level_console = Logging.Info,
+        min_level_file = Logging.Warn,
+    )
     PSRLogger.debug("debug")
     PSRLogger.info("info")
     PSRLogger.warn("warn")
@@ -65,16 +89,17 @@ function test_log_levels_on_file()
     @test occursin("non_fatal_error", logs_on_file[2])
     PSRLogger.close_psr_logger(psr_logger)
     rm(log_path)
+    return nothing
 end
 
 function test_log_names_with_dict()
     level_dict = Dict(
-            "Debug Level" => "debug level",
-            "Debug" => "debug",
-            "Info" => "info",
-            "Warn" => "warn",
-            "Error" => "error"
-        )
+        "Debug Level" => "debug level",
+        "Debug" => "debug",
+        "Info" => "info",
+        "Warn" => "warn",
+        "Error" => "error",
+    )
     log_path = "log_names_test.log"
     psr_logger = PSRLogger.create_psr_logger(log_path; level_dict = level_dict)
     PSRLogger.debug("test")
@@ -90,6 +115,7 @@ function test_log_names_with_dict()
     @test occursin("[error]", logs_on_file[5])
     PSRLogger.close_psr_logger(psr_logger)
     rm(log_path)
+    return nothing
 end
 
 function runtests()

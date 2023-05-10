@@ -9,6 +9,7 @@ function test_create_and_close_psr_logger()
     @test isfile(log_path)
     PSRLogger.close_psr_logger(psr_logger)
     rm(log_path)
+    return nothing
 end
 
 function test_create_two_psr_loggers_in_different_files()
@@ -22,6 +23,7 @@ function test_create_two_psr_loggers_in_different_files()
     PSRLogger.close_psr_logger(psr_logger2)
     rm(log_path1)
     rm(log_path2)
+    return nothing
 end
 
 function test_create_two_psr_loggers_in_the_same_file()
@@ -33,6 +35,7 @@ function test_create_two_psr_loggers_in_the_same_file()
     PSRLogger.close_psr_logger(psr_logger1)
     PSRLogger.close_psr_logger(psr_logger2)
     rm(log_path)
+    return nothing
 end
 
 function runtests()
