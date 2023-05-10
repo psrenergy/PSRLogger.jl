@@ -77,10 +77,13 @@ PSRLogger.info(1)
 PSRLogger.info(2, "file.txt")
 ```
 
-## Customize log tag
+## Create logger
 
-There are some kargs that can be passed using `PSRLogger.create_psr_logger`:
-
+The arguments that can be passed using `PSRLogger.create_psr_logger`:
+* `log_file_path`: Log file path. This input must be passed
+* `min_level_console`: Minimum level shown in console. Default: Logging.Info
+* `min_level_file`: Minimum level shown in file. Default: Logging.Debug
+* `append_log`: Boolean input to append logs in existing log file (if true) or overwrite/create log file (if false). Default is false
 * `brackets_dict`: select the brackets for each LogLevel. As default,
 ```
 brackets_dict = Dict(
@@ -92,7 +95,6 @@ brackets_dict = Dict(
     "Fatal Error" => ["[", "]"],
 )
 ```
-
 * `level_dict`: defined in order to change the tags. As default, 
 ```
 level_dict = Dict(
@@ -104,7 +106,6 @@ level_dict = Dict(
     "Fatal Error" => "Fatal Error"
 )
 ```
-
 * `color_dict`: one can customize the tag colors displayed in terminal using this dictionary. As default,
 ```
 color_dict = Dict(
@@ -116,7 +117,6 @@ color_dict = Dict(
     "Fatal Error" => :red
 )
 ```
-
 * `background_reverse_dict`: used to customize the background of a tag in terminal. As default, 
 ```
 background_reverse_dict = Dict(
