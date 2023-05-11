@@ -143,7 +143,7 @@ function create_psr_logger(
     # Console logger only min_level_console and up
     format_logger_console = FormatLogger() do io, args
         level_to_print = choose_level_to_print(args.level, level_dict)
-        io = choose_terminal_io(args.level)
+        io = choose_terminal_io(args.level) # needed to use PSRLogger in MD Studio. It takes stderr as error and stdout as non error log
         print(io, open_bracket)
         print_colored(io, level_to_print, args.level, color_dict, background_reverse_dict)
         println(io, close_bracket, " ", args.message)
@@ -191,7 +191,7 @@ end
 
 function print_colored(io::IO, str::String; color::Symbol = :normal, reverse::Bool = false)
     if color == :normal && reverse == false
-        print(io, str)
+        print(io, str) # MD Studio doesn't support colors and even printstyled with color = :normal and reverse = false doesn't work
     else
         printstyled(io, str; color = color, reverse = reverse)
     end
