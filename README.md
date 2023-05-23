@@ -85,7 +85,7 @@ The arguments that can be passed using `PSRLogger.create_psr_logger`:
 * `min_level_file`: Minimum level shown in file. Default: Logging.Debug
 * `append_log`: Boolean input to append logs in existing log file (if true) or overwrite/create log file (if false). Default is false
 * `brackets_dict`: select the brackets for each LogLevel. As default,
-```
+```julia
 brackets_dict = Dict(
     "Debug Level" => ["[", "]"],
     "Debug" => ["[", "]"],
@@ -96,7 +96,7 @@ brackets_dict = Dict(
 )
 ```
 * `level_dict`: defined in order to change the tags. As default, 
-```
+```julia
 level_dict = Dict(
     "Debug Level" => "Debug Level",
     "Debug" => "Debug",
@@ -107,7 +107,7 @@ level_dict = Dict(
 )
 ```
 * `color_dict`: one can customize the tag colors displayed in terminal using this dictionary. As default,
-```
+```julia
 color_dict = Dict(
     "Debug Level" => :cyan,
     "Debug" => :cyan,
@@ -118,7 +118,7 @@ color_dict = Dict(
 )
 ```
 * `background_reverse_dict`: used to customize the background of a tag in terminal. As default, 
-```
+```julia
 background_reverse_dict = Dict(
     "Debug Level" => false,
     "Debug" => false,
