@@ -177,7 +177,7 @@ function create_psr_logger(
     console_logger = MinLevelLogger(format_logger_console, min_level_console)
 
     # File logger logs min_level_file and up
-    format_logger_file = FormatLogger(log_file_path; append = true) do io, args
+    format_logger_file = FormatLogger(log_file_path; append = append_log) do io, args
         level_to_print = choose_level_to_print(args.level, level_dict)
         open_bracket, close_bracket = get_tag_brackets(args.level, brackets_dict)
         space_before_msg = treat_empty_tag(level_to_print, close_bracket)
