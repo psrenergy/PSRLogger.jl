@@ -4,6 +4,8 @@ macro fatal_error(msg)
         @logmsg FatalErrorLevel $(esc(msg))
         if !isinteractive()
             exit(1)
+        else
+            error("Fatal Error")
         end
     end
 end
