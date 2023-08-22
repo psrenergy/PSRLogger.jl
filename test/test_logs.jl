@@ -176,6 +176,37 @@ function test_log_from_langs_dict_with_invalid_interpolation()
     return nothing
 end
 
+function test_empty_brackets()
+    brackets = Dict(
+        "Debug Level" => ["[", "]"],
+        "Debug" => ["[", "]"],
+        "Info" => [],
+        "Warn" => ["[", "]"],
+        "Error" => ["[", "]"],
+        "Fatal Error" => ["[", "]"],
+    )
+    level = Dict(
+        "Debug Level" => "debug",
+        "Debug" => "debug",
+        "Info" => "",
+        "Warn" => "warn",
+        "Error" => "error",
+        "Fatal Error" => "fatal"
+    )
+
+    logger_path = "brackets.log"
+    logger = PSRLogger.create_psr_logger(
+        logger_path,
+        brackets_dict = brackets,
+        level_dict = level,
+    )
+
+    PSRLogger.info("empty brackets for info")
+    PSRLogger.warn("brackets for warn")
+    PSRLogger.close_psr_logger(logger)
+    rm(logger_path; force = true)
+end
+
 function runtests()
     for name in names(@__MODULE__; all = true)
         if startswith("$name", "test_")

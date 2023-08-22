@@ -60,7 +60,13 @@ end
 
 function get_tag_brackets(level::LogLevel, brackets_dict::Dict)
     level_str = get_level_string(level)
-    return brackets_dict[level_str]
+    tag_brackets = brackets_dict[level_str]
+    # If brackets are empty return empty strings
+    if !isempty(tag_brackets)
+        return tag_brackets
+    else
+        return ["", ""]
+    end
 end
 
 function treat_empty_tag(level_to_print::String, close_bracket::String)
