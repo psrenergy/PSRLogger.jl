@@ -191,12 +191,12 @@ function test_empty_brackets()
         "Info" => "",
         "Warn" => "warn",
         "Error" => "error",
-        "Fatal Error" => "fatal"
+        "Fatal Error" => "fatal",
     )
 
     logger_path = "brackets.log"
     logger = PSRLogger.create_psr_logger(
-        logger_path,
+        logger_path;
         brackets_dict = brackets,
         level_dict = level,
     )
